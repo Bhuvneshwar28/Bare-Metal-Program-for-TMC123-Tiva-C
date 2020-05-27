@@ -1,0 +1,35 @@
+#include "stdint.h"
+#include "tm4c123gh6pm.h"
+//#define SYSCTL_RCGCGPIO_R       (*((volatile uint32_t *)0x400FE608))
+//#define GPIO_PORTF_DATA_R       (*((volatile uint32_t *)0x400253FC))
+//#define GPIO_PORTF_DIR_R        (*((volatile uint32_t *)0x40025400))
+//#define GPIO_PORTF_DEN_R        (*((volatile uint32_t *)0x4002551C))
+
+volatile int counter = 0;
+void delay(void);
+ 
+ int main()
+ {
+	 SYSCTL_RCGCGPIO_R = 0x20;
+	 GPIO_PORTF_DIR_R= 0x04;
+	 GPIO_PORTF_DEN_R= 0x04;
+	 
+	 while(1)
+	 {
+		 GPIO_PORTF_DATA_R= 0x04;
+		 counter =0;
+		 delay();
+		 counter = 0;
+		 GPIO_PORTF_DATA_R= 0x00;
+		 delay();
+	 }
+	 
+ }
+ 
+ void delay(void) 
+  {
+	while (counter<100000)
+   {
+	    counter++;
+   }
+  }
